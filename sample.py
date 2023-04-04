@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 import pickle
 import numpy as np
+from geopy.geocoders import Nominatim
+from geopy.distance import distance
 
 model = pickle.load(open('model.pkl', 'rb'))
 charges_model = pickle.load(open('charges.pkl', 'rb'))
