@@ -47,6 +47,7 @@ def calculate():
 
     # calculate the distance between the two locations using the Haversine formula
     dist = distance((lat1, lon1), (lat2, lon2)).km
+    dist = round(dist,1)
     weight = request.form.get('weight')
 
     inputt_query = np.array([[dist, weight]])
