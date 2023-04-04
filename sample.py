@@ -24,7 +24,27 @@ def predict():
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
-    dist = request.form.get('dist')
+    loc1 = request.form.get('loc1')
+    loc2 = request.form.get('loc2')
+    weight = request.form.get('weight')
+
+    # initialize the geolocator
+    geolocator = Nominatim(user_agent="my_app")
+
+    # get the latitude and longitude of the first address
+    location1 = geolocator.geocode(loc1)
+    lat1, lon1 = location1.latitude, location1.longitude
+
+    # get the latitude and longitude of the second address
+    location2 = geolocator.geocode(loc2)
+    lat2, lon2 = location2.latitude, location2.longitude
+
+    print(loc1, loc2)
+    print(location1)
+    print(location2)
+
+    # calculate the distance between the two locations using the Haversine formula
+    dist = distance((lat1, lon1), (lat2, lon2)).km
     weight = request.form.get('weight')
 
     inputt_query = np.array([[dist, weight]])
