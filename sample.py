@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 
 model = pickle.load(open('model.pkl', 'rb'))
+charges_model = pickle.load(open('charges.pkl', 'rb'))
 
 app = Flask(__name__)
 
@@ -20,6 +21,17 @@ def predict():
     result = model.predict(input_query)[0]
 
     return jsonify({'placement': str(result)})
+
+@app.route('/calculate', methods=['POST'])
+def calculate():
+    dist = request.form.get('dist')
+    weight = request.form.get('weight')
+
+    inputt_query = np.array([[dist, weight]])
+    charges = charges_model.predict(inputt_query)[0]
+    print(charges)
+
+    return jsonify({'charges': str(round(charges))})
 
 if __name__ == '__main__':
     #app.run(debug=True)
